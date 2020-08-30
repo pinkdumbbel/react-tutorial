@@ -1,0 +1,19 @@
+{
+  "posts": [
+    {
+      "id": 1,
+      "title": "redux thunk api tutorial",
+      "body": "리덕스 미들웨어 직접 만들어 보기"
+    },
+    {
+      "id": 2,
+      "title": "redux thunk api tutorial2",
+      "body": "리덕스 미들웨어 직접 만들어 보기2"
+    },
+    {
+      "id": 3,
+      "title": "redux thunk api tutorial3",
+      "body": "리덕스 미들웨어 직접 만들어 보기3"
+    }
+  ]
+}
