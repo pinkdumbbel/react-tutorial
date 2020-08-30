@@ -1,11 +1,11 @@
 export const createPromiseThunk = (type, promiseCreator) => {
     const [SUCCESS, ERROR] = [`${type}_SUCCESS`, `${type}_ERROR`];
 
-    return param => async dispatch => {
+    return () => async dispatch => {
         dispatch({ type });
 
         try {
-            const payload = await promiseCreator(param);
+            const payload = await promiseCreator();
             dispatch({
                 type: SUCCESS,
                 payload
@@ -16,6 +16,39 @@ export const createPromiseThunk = (type, promiseCreator) => {
                 type: ERROR,
                 payload: e,
                 error: true,
+            });
+        }
+    };
+};
+
+const defaultIdSelector = param => param;
+
+export const createPromiseThunkById = (type, promiseCreator, idSelector = defaultIdSelector) => {
+    return param => async (dispatch) => {
+
+        const id = idSelector(param);
+
+        const [SUCCESS, ERROR] = [`${type}_SUCCESS`, `${type}_ERROR`];
+
+        dispatch({ type });
+        console.log(dispatch);
+
+        try {
+            const payload = await promiseCreator(id);
+
+            dispatch({
+                type: SUCCESS,
+                payload,
+                error: null,
+                meta: id
+            });
+
+        } catch (e) {
+            dispatch({
+                type: ERROR,
+                payload: e,
+                error: true,
+                meta: id
             });
         }
     };
@@ -64,6 +97,46 @@ export const handleAsyncActions = (type, key, keepData) => {
                     ...state,
                     [key]: reducerUtils.error(action.payload),
                 };
+            default:
+                return state;
+        }
+    };
+};
+
+export const handleAsyncActionsById = (type, key) => {
+    const [SUCCESS, ERROR] = [`${type}_SUCCESS`, `${type}_ERROR`];
+
+    return (state, action) => {
+        const id = action.meta;
+
+        switch (action.type) {
+            case type:
+                return {
+                    ...state,
+                    [key]: {
+                        ...state[key],
+                        [id]: reducerUtils.loading(state.post[id] && state.post[id].data)
+                    }
+                };
+
+            case SUCCESS:
+                return {
+                    ...state,
+                    [key]: {
+                        ...state[key],
+                        [id]: reducerUtils.success(action.payload)
+                    }
+                };
+
+            case ERROR:
+                return {
+                    ...state,
+                    [key]: {
+                        ...state[key],
+                        [id]: reducerUtils.error(action.payload)
+                    }
+                };
+
             default:
                 return state;
         }

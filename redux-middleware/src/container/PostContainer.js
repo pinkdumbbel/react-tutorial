@@ -9,7 +9,6 @@ function PostContainer({ match }) {
 
     const { data, loading, error } = useSelector(
         state => {
-            console.log(state.posts);
             return (state.posts.post[id] || reducerUtils.initial());
         }
     );
