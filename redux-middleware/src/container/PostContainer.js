@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Post from '../components/Post';
-import { getPost } from '../module/posts';
+import { getPost, goToHome } from '../module/posts';
 import { reducerUtils } from '../lib/asyncUtils';
 
 function PostContainer({ match }) {
@@ -24,7 +24,10 @@ function PostContainer({ match }) {
     if (!data) return null;
 
     return (
-        <Post post={data} />
+        <>
+            <button onClick={() => dispatch(goToHome())}>홈으로 이동</button>
+            <Post post={data} />
+        </>
     );
 }
 
