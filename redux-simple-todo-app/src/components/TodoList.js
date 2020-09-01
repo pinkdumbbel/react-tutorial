@@ -8,7 +8,7 @@ const TodoListBlock = styled.div`
     overflow-y: auto;
 `;
 
-function TodoList({ todos, onToggle, onDelete }) {
+function TodoList({ todos, onToggle, onDelete, onModify }) {
     const listRef = useRef(null);
 
     //할일 목록 추가시 스크롤 하단으로 가도록 
@@ -21,7 +21,7 @@ function TodoList({ todos, onToggle, onDelete }) {
         <TodoListBlock ref={listRef}>
             {
                 todos.map(todo => (
-                    <TodoItem key={todo.id} todo={todo} onDelete={onDelete} onToggle={onToggle} />
+                    <TodoItem key={todo.id} todo={todo} onDelete={onDelete} onToggle={onToggle} onModify={onModify} />
                 ))
             }
         </TodoListBlock>

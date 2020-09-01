@@ -18,12 +18,12 @@ const TodoTemplateContent = styled.div`
     background: white;
 `;
 
-function TodoTemplate({ todos, onCreate, onToggle, onDelete }) {
+function TodoTemplate({ todos, onCreate, onToggle, onDelete, onModify }) {
     return (
         <TodoTemplateWrapper>
             <TodoTemplateContent>
                 <TodoHead onCreate={onCreate} />
-                <TodoList todos={todos} onToggle={onToggle} onDelete={onDelete} />
+                <TodoList todos={todos} onToggle={onToggle} onDelete={onDelete} onModify={onModify} />
             </TodoTemplateContent>
         </TodoTemplateWrapper>
     );

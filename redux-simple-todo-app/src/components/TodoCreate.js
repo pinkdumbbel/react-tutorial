@@ -49,8 +49,6 @@ function TodoCreate({ onCreate }) {
     const onSubmit = (e) => {
         e.preventDefault();
         onCreate(text);
-        console.log(text);
-
         setText('');
     };
 
