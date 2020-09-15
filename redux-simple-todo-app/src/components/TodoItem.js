@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import styled, { css } from 'styled-components';
 import { MdDone, MdClear, MdCreate } from "react-icons/md";
 
@@ -70,6 +70,8 @@ const TodoModify = styled.div`
 `;
 
 function TodoItem({ todo, onToggle, onDelete, onModify }) {
+    const modRef = useRef(null);
+
     const { id, todo: task, done } = todo;
 
     const [modFlag, setModFlag] = useState(false);
@@ -81,11 +83,14 @@ function TodoItem({ todo, onToggle, onDelete, onModify }) {
 
     const onSubmit = (e) => {
         e.preventDefault();
-        console.log(text);
         onModify(id, text);
         setModFlag(!modFlag);
     };
 
+    const modifyFocus = () => {
+        setModFlag(!modFlag);
+        modRef.current.focus();
+    };
     return (
         <>
 
@@ -94,6 +99,7 @@ function TodoItem({ todo, onToggle, onDelete, onModify }) {
                 <TodoText onClick={() => onToggle(id, modFlag)}>
                     <TodoModifyForm onSubmit={onSubmit}>
                         <TodoModiFyInput
+                            ref={modRef}
                             value={text}
                             done={done}
                             modFlag={modFlag}
@@ -102,7 +108,7 @@ function TodoItem({ todo, onToggle, onDelete, onModify }) {
                         />
                     </TodoModifyForm>
                 </TodoText>
-                <TodoModify onClick={() => setModFlag((modFlag) ? false : true)} ><MdCreate /></TodoModify>
+                <TodoModify onClick={() => modifyFocus()} ><MdCreate /></TodoModify>
                 <TodoComplete>{done && <MdDone />}</TodoComplete>
             </TodoItemBlock>
         </>

@@ -6,8 +6,6 @@ import { createTodo, completeTodo, modifyTodo, deleteTodo } from '../module/todo
 function TodosContainer() {
     const todos = useSelector(state => state.todos);
 
-    console.log(todos);
-
     const dispatch = useDispatch();
 
     const onCreate = (todo) => dispatch(createTodo(todo));

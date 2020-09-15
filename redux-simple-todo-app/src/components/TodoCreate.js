@@ -48,6 +48,10 @@ function TodoCreate({ onCreate }) {
 
     const onSubmit = (e) => {
         e.preventDefault();
+        if (text === '') {
+            alert('할 일을 입력해주세요');
+            return false;
+        }
         onCreate(text);
         setText('');
     };

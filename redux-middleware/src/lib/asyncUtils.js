@@ -3,9 +3,9 @@ import { call, put } from 'redux-saga/effects';
 export const createPromiseSaga = (type, promiseCreator) => {
     const [SUCCESS, ERROR] = [`${type}_SUCCESS`, `${type}_ERROR`];
 
-    return function* (action) {
+    return function* () {
         try {
-            const result = yield call(promiseCreator, action.payload);
+            const result = yield call(promiseCreator);
 
             yield put({ type: SUCCESS, payload: result });
         } catch (e) {

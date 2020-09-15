@@ -6,6 +6,9 @@ const TodoListBlock = styled.div`
     max-height: 180px;
     border-top:1px solid #22b8cf;
     overflow-y: auto;
+    &::-webkit-scrollbar {
+        display:none;
+    };
 `;
 
 function TodoList({ todos, onToggle, onDelete, onModify }) {
@@ -14,8 +17,7 @@ function TodoList({ todos, onToggle, onDelete, onModify }) {
     //할일 목록 추가시 스크롤 하단으로 가도록 
     useEffect(() => {
         listRef.current.scrollTop = listRef.current.scrollHeight;
-        console.log(listRef.current.scrollTop);
-    }, [todos]);
+    }, [todos.length]);
 
     return (
         <TodoListBlock ref={listRef}>
