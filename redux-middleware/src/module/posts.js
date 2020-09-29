@@ -11,6 +11,7 @@ import {
     createPromiseSagaById
 } from '../lib/asyncUtils';
 
+//액션타입 지정
 const GET_POSTS = 'GET_POSTS';
 const GET_POSTS_SUCCESS = 'GET_POSTS_SUCCESS';
 const GET_POSTS_ERROR = 'GET_POSTS_ERROR';
@@ -20,22 +21,22 @@ const GET_POST_SUCCESS = 'GET_POST_SUCCESS';
 const GET_POST_ERROR = 'GET_POST_ERROR';
 const GO_TO_HOME = 'GO_TO_HOME';
 
-/* export const getPosts = createPromiseThunk(GET_POSTS, postsAPI.getPosts);
-export const getPost = createPromiseThunkById(GET_POST, postsAPI.getPostById); */
+//액션생성함수 
+/* 
+export const getPosts = createPromiseThunk(GET_POSTS, postsAPI.getPosts);
+export const getPost = createPromiseThunkById(GET_POST, postsAPI.getPostById); 
+export const goToHome = () => (getState, dispatch, { history }) => {history.push('/');};
+*/
 export const getPosts = () => ({ type: GET_POSTS });
 // payload는 파라미터 용도, meta는 리듀서에서 id를 알기위한 용도
 export const getPost = id => ({ type: GET_POST, payload: id, meta: id });
-
-/* export const goToHome = () => (getState, dispatch, { history }) => {
-    history.push('/');
-}; */
-
 export const goToHome = () => ({ type: GO_TO_HOME });
-
 function* goToHomeSaga() {
     const history = yield getContext('history');
     history.push('/');
 }
+
+//액션 디스패치 
 const getPostsSaga = createPromiseSaga(GET_POSTS, postsAPI.getPosts);
 const getPostSaga = createPromiseSagaById(GET_POST, postsAPI.getPostById);
 

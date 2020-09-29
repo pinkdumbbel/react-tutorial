@@ -3,7 +3,8 @@ import { call, put } from 'redux-saga/effects';
 export const createPromiseSaga = (type, promiseCreator) => {
     const [SUCCESS, ERROR] = [`${type}_SUCCESS`, `${type}_ERROR`];
 
-    return function* () {
+    return function* (action) {
+        console.log(action);
         try {
             const result = yield call(promiseCreator);
 
