@@ -2,6 +2,8 @@ const { Component } = require("react");
 const React = require("react");
 const { hot } = require("react-hot-loader/root");
 
+let computerChoice = "rock";
+
 const rspCoords = {
   rock: "0",
   scissor: "-142px",
@@ -12,12 +14,6 @@ const scores = {
   rock: 0,
   scissor: 1,
   paper: -1,
-};
-
-const computerChoice = (imgCoord) => {
-  return Object.entries(rspCoords).find(function (v) {
-    return v[1] === imgCoord;
-  })[0];
 };
 
 //class형 컴포넌트 라이프사이클
@@ -38,40 +34,29 @@ class Rsp extends Component {
     this.interval = setInterval(this.changeHand, 100);
   }
 
-  componentDidUpdate() {
-    //리렌더링
-  }
-
   componentWillUnmount() {
     clearInterval(this.interval);
   }
 
   changeHand = () => {
-    if (this.state.imgCoord === rspCoords.rock) {
-      this.setState({
-        imgCoord: rspCoords.scissor,
-      });
-    } else if (this.state.imgCoord === rspCoords.scissor) {
-      this.setState({
-        imgCoord: rspCoords.paper,
-      });
-    } else if (this.state.imgCoord === rspCoords.paper) {
-      this.setState({
-        imgCoord: rspCoords.rock,
-      });
+    if (computerChoice === "rock") {
+      computerChoice = "scissor";
+    } else if (computerChoice === "scissor") {
+      computerChoice = "paper";
+    } else if (computerChoice === "paper") {
+      computerChoice = "rock";
     }
+
+    this.setState({
+      imgCoord: rspCoords[computerChoice],
+    });
   };
 
   onClickBtn = (choice) => () => {
-    const { imgCoord } = this.state;
     clearInterval(this.interval);
     const myScore = scores[choice];
-    const cpuScore = scores[computerChoice(imgCoord)];
+    const cpuScore = scores[computerChoice];
     const diff = myScore - cpuScore;
-
-    console.log(`choice => ${choice}`);
-    console.log(`computerChoice=>${computerChoice(imgCoord)}`);
-    console.log(`cpuScore => ${cpuScore}`);
 
     if (diff === 0) {
       this.setState({
