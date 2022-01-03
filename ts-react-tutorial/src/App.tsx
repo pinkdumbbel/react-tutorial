@@ -8,7 +8,6 @@ function App() {
   /* const onSubmit = (form: {name: string, exp: string}) => {
       console.log(form);
   } */
-
   return (
     <Todolist />
   );
