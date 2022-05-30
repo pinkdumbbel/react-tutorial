@@ -1,21 +1,33 @@
 import Seo from '../components/Seo';
+import { useRouter } from 'next/dist/client/router';
 
 function Home({ results }) {
-  /* const [movies, setMovies] = useState([]);
-  useEffect(() => {
-    (async () => {
-      const { results } = await (await fetch('/api/movies')).json();
+  const router = useRouter();
+  /*   const onClick = (moveId, title) => {
+    router.push(
+      {
+        pathname: `movies/${moveId}`,
+        query: {
+          title,
+        },
+      },
+      `movies/${moveId}`
+    );
+  }; */
 
-      setMovies(results);
-    })();
-  }, []); */
+  const onClick = (movieId, title) => {
+    router.push(`movies/${title}/${movieId}`);
+  };
 
   return (
     <div className='container'>
       <Seo title='Home' />
-      {/* {!movies && <h4>Loading...</h4>} */}
       {results?.map((movie) => (
-        <div className='movie' key={movie.id}>
+        <div
+          className='movie'
+          key={movie.id}
+          onClick={() => onClick(movie.id, movie.title)}
+        >
           <img src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`} />
           <h4>{movie.original_title}</h4>
         </div>
